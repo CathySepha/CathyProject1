@@ -18,7 +18,7 @@ import java.util.List;
 public class Paying extends AppCompatActivity {
     TextView receiver_msg;
 
-    String lNoOfseats, lDropoff;
+    String lNoOfseats, lDropoff,test;
     TextInputEditText Dropoffstage, NoOfSeats;
     Button PAY;
     @Override
