@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+
+
+
+    <TextView
+        android:id="@+id/txt_destinationId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="DestinationId"
+        android:padding="4dp"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:visibility="invisible"/>
+
+
+    <TextView
+        android:id="@+id/txt_Tripname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Tripname"
+        android:padding="4dp"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
+    <TextView
+        android:id="@+id/txt_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Amount"
+        android:padding="4dp"
+        android:textSize="18sp" />
+
+</LinearLayout>
