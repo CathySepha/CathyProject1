@@ -34,7 +34,7 @@
         android:textColor="@android:color/black">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lDropoff"
+            android:id="@+id/pDropoffstage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text"
@@ -60,7 +60,7 @@
         android:textColor="@android:color/black">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lNoOfseats"
+            android:id="@+id/pNoOfseats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@android:color/black"
