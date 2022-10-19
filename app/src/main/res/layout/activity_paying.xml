@@ -19,6 +19,29 @@
         android:text="Convenient And Reliable"
         android:textColor="@android:color/black"
         android:textSize="25sp" />
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint=" Ticket Price "
+        android:layout_margin="20dp"
+        android:textColor="@android:color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lAmount"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:lines="1"
+            android:maxLines="1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
 
@@ -69,29 +92,7 @@
             android:maxLines="1"/>
 
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
 
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Amount"
-        android:layout_margin="20dp"
-        android:textColor="@android:color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lAmount"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@android:color/black"
-            android:lines="1"
-            android:maxLines="1"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/Confirm"

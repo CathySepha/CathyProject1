@@ -102,6 +102,7 @@ public class Login extends AppCompatActivity {
                             String id = jsonObject.getString("UserId");
                             String FirstName = jsonObject.getString("FirstName");
                             String LastName = jsonObject.getString("LastName");
+                            String Role = jsonObject.getString("Role");
 
                             if (success.equals("1")) {
                                 Toast.makeText(getApplicationContext(), "Logged In  Success", Toast.LENGTH_LONG).show();
