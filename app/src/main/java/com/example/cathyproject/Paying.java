@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,25 +35,38 @@ import java.util.Map;
 public class Paying extends AppCompatActivity {
     TextView receiver_msg;
 
-    String pNoOfseats, pDropoffstage, str;
+    String pNoOfseats, pDropoffstage,Phone,UserId,TripId, Amount,PhoneNumber;
     TextInputEditText Dropoffstage, NoOfSeats;
+    TextView RemainingSits;
     Button PAY;
     float res;
     ProgressDialog pdDialog;
+    SharedPreferences sh;
+    List<String> destinationId,Remainingslots;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paying);
         receiver_msg = findViewById(R.id.lAmount);
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+        PhoneNumber = sh.getString("PhoneNumber", "");
+        UserId= sh.getString("UserId", "");
+        RemainingSits=findViewById(R.id.pslots);
 
         Intent intent = getIntent();
-        String str = intent.getStringExtra("Amount");
-        receiver_msg.setText(str);
+        TripId= intent.getStringExtra("TripId");
+        Amount = intent.getStringExtra("Amount");
+        receiver_msg.setText(Amount);
 
         pdDialog= new ProgressDialog(Paying.this);
         pdDialog.setTitle("loading...");
         pdDialog.setCancelable(false);
+
+       destinationId= new ArrayList<String>();
+        Remainingslots= new ArrayList<String>();
+
 
         Dropoffstage= (TextInputEditText) findViewById(R.id.pDropoffstage);
         NoOfSeats = (TextInputEditText) findViewById(R.id.pNoOfseats);
@@ -72,6 +88,7 @@ public class Paying extends AppCompatActivity {
 
             }
         });
+        selectdata();
     }
     public void open(float res){
         String str = String.valueOf(res);
@@ -95,6 +112,68 @@ public class Paying extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+    public void selectdata() {
+        pdDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.url),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Bpink", response);
+                        pdDialog.dismiss();
+
+
+
+                        try {
+                            JSONObject eventobject = new JSONObject(response);
+
+                            JSONArray array = eventobject.getJSONArray("data");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                // creating a new json object and
+                                // getting each object from our json array.
+
+                                // we are getting each json object.
+                                JSONObject responseObj = array.getJSONObject(i);
+
+
+                                String Remslots = responseObj.getString("Remainingslots");
+
+                                RemainingSits.setText(Remslots);
+
+
+
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdDialog.dismiss();
+                Log.d("volley error", error.toString());
+                Toast.makeText(getApplicationContext(), "Insertion Error !2" + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                String sql = "SELECT Remainingslots FROM trips WHERE DestinationId = '"+TripId+"' AND Status = 'Active'";
+                params.put("sql", sql);
+                params.put("action", "getdata");
+
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
     private void paying()
     {
@@ -147,10 +226,9 @@ public class Paying extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
-                String sql="INSERT INTO bookings (NoOfSeats, Dropoffstage) VALUES ('$pNoOfseats', '$pDropoffstage');";
-
-                params.put("NoOfSeats", pNoOfseats);
-                params.put("Dropoffstage",pDropoffstage);
+                String sql="INSERT INTO bookings (UserId, TripId, Amount, NoOfSeats, Dropoffstage,PhoneNumber) VALUES ('"+UserId+"','"+TripId+"','"+Integer.parseInt(Amount) * Integer.parseInt(pNoOfseats)+"','"+pNoOfseats+"','"+pDropoffstage+"','"+PhoneNumber+"');";
+               Log.d("Moi",sql);
+                params.put("sql", sql);
                 params.put("action","insertdata");
 
 

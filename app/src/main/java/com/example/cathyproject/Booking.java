@@ -126,7 +126,7 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
     public void onNoteClick(int position) {
 
         Intent intent = new Intent(Booking.this, Paying.class);
-        intent.putExtra("Id",  tripsList.get(position).getDestinationId());
+        intent.putExtra("TripId",  tripsList.get(position).getDestinationId());
         intent.putExtra("Amount",  tripsList.get(position).getAmount());
         startActivity(intent);
     

@@ -57,8 +57,7 @@ public class Login extends AppCompatActivity {
         pdDialog.setTitle("Login please wait...");
         pdDialog.setCancelable(false);
 
-        mPreferences = getSharedPreferences(sharedprofFile, MODE_PRIVATE);
-        preferencesEditor = mPreferences.edit();
+
 
         Email= (TextInputEditText) findViewById(R.id.lEmail);
         Password = (TextInputEditText) findViewById(R.id.lPassword);
@@ -102,6 +101,7 @@ public class Login extends AppCompatActivity {
                             String id = jsonObject.getString("UserId");
                             String FirstName = jsonObject.getString("FirstName");
                             String LastName = jsonObject.getString("LastName");
+                            String PhoneNumber = jsonObject.getString("PhoneNumber");
                             String Role = jsonObject.getString("Role");
 
                             if (success.equals("1")) {
@@ -109,9 +109,11 @@ public class Login extends AppCompatActivity {
                                 pdDialog.dismiss();
 
                                 preferencesEditor.putString("issignedin", "true");
-                                preferencesEditor.putString("SignedInUserID", id);
-                                preferencesEditor.putString("SignedInFirstName", FirstName);
-                                preferencesEditor.putString("SignedInLastName", LastName);
+                                preferencesEditor.putString("UserId", id);
+                                preferencesEditor.putString("FirstName", FirstName);
+                                preferencesEditor.putString("LastName", LastName);
+                                preferencesEditor.putString("PhoneNumber", PhoneNumber);
+                                preferencesEditor.putString("Role", Role);
                                 preferencesEditor.apply();
 
                                 Intent i = new Intent(Login.this, Booking.class);
@@ -119,25 +121,37 @@ public class Login extends AppCompatActivity {
                                 finish();
 
                             }
-                            if (success.equals("0")) {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                pdDialog.dismiss();
-                            }
-                            if (success.equals("3")) {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            if (Role.equals("Customer")) {
+                                Intent intent = new Intent(Login.this, Booking.class);
+                                intent.putExtra(id, id);
+                                intent.putExtra(FirstName, FirstName);
+                                intent.putExtra(LastName, LastName);
+
+                                finish();
+                                startActivity(intent);
+                            } if (Role.equals("Driver")) {
+                                Intent intent = new Intent(Login.this, Driver.class);
+                                intent.putExtra(id, id);
+                                intent.putExtra(FirstName, FirstName);
+                                intent.putExtra(LastName, LastName);
+                                finish();
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                                 pdDialog.dismiss();
                             }
 
+
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Registration Error !1" + e, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Login Error !1"+e,Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pdDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Registration Error !2" + error, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login Error !2" + error, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
