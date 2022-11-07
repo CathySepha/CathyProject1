@@ -35,7 +35,7 @@ import java.util.Map;
 public class Paying extends AppCompatActivity {
     TextView receiver_msg;
 
-    String pNoOfseats, pDropoffstage,Phone,UserId,TripId, Amount,PhoneNumber;
+    String pNoOfseats, pDropoffstage,UserId,TripId, Amount,PhoneNumber;
     TextInputEditText Dropoffstage, NoOfSeats;
     TextView RemainingSits;
     Button PAY;
@@ -52,6 +52,7 @@ public class Paying extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
         PhoneNumber = sh.getString("PhoneNumber", "");
+
         UserId= sh.getString("UserId", "");
         RemainingSits=findViewById(R.id.pslots);
 
@@ -89,6 +90,7 @@ public class Paying extends AppCompatActivity {
             }
         });
         selectdata();
+
     }
     public void open(float res){
         String str = String.valueOf(res);
@@ -190,14 +192,16 @@ public class Paying extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
+                            mpesa();
+
 
                             if(success.equals("1")){
                                 Toast.makeText(getApplicationContext(),"Details added Successfully",Toast.LENGTH_LONG).show();
                                 pdDialog.dismiss();
 
-                                Intent Login = new Intent(Paying.this,Paying.class);
-                                startActivity(Login);
-                                finish();
+//                                Intent Login = new Intent(Paying.this,Paying.class);
+//                                startActivity(Login);
+//                                finish();
 
                             }
                             if(success.equals("0")){
@@ -237,6 +241,112 @@ public class Paying extends AppCompatActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    // VOLLEY FOR SMS //
+    public void messaging() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.smsurl),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Bpink", response);
+
+
+
+
+                        try {
+                            JSONObject eventobject = new JSONObject(response);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("volley error", error.toString());
+                Toast.makeText(getApplicationContext(), "Insertion Error !2" + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Phone",PhoneNumber);
+                params.put("Message","Booking Confirmed");
+
+
+
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+    // VOLLEY FOR MPESA
+    public void mpesa() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.mpesaurl),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Jijo", response);
+
+
+
+
+                        try {
+                            messaging();
+                            JSONObject eventobject = new JSONObject(response);
+
+                            JSONArray array = eventobject.getJSONArray("data");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                // creating a new json object and
+                                // getting each object from our json array.
+
+                                // we are getting each json object.
+                                JSONObject responseObj = array.getJSONObject(i);
+
+
+
+
+
+
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("volley error", error.toString());
+                Toast.makeText(getApplicationContext(), "Insertion Error !2" + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Phone", PhoneNumber);
+
+
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
 }
