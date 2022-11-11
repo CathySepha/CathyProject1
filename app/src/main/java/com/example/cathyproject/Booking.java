@@ -80,12 +80,12 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
                                 // we are getting each json object.
                                 JSONObject responseObj = array.getJSONObject(i);
 
-                                String destid = responseObj.getString("DestinationId");
+                                String tripid = responseObj.getString("TripId");
                                 String destname = responseObj.getString("Tripname");
                                 String destamount = responseObj.getString("Amount");
 
 
-                                tripsList.add(new Trips(destid, destname, destamount));
+                                tripsList.add(new Trips(tripid , destname, destamount));
                                 rv_trips.setAdapter(new TripsAdapter(tripsList, Booking.this));
 
 
@@ -108,7 +108,7 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                String sql = "SELECT tripdetails.DestinationId, destination.Tripname, tripdetails.Amount from tripdetails inner join destination on destination.DestinationId=tripdetails.DestinationId";
+                String sql = "SELECT trips.TripId, tripdetails.Amount, destination.Tripname FROM trips INNER JOIN tripdetails ON trips.DestinationId=tripdetails.DestinationId INNER JOIN destination ON tripdetails.DestinationId=destination.DestinationId";
                 params.put("sql", sql);
                 params.put("action", "getdata");
 
@@ -126,7 +126,7 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
     public void onNoteClick(int position) {
 
         Intent intent = new Intent(Booking.this, Paying.class);
-        intent.putExtra("TripId",  tripsList.get(position).getDestinationId());
+        intent.putExtra("TripId",  tripsList.get(position).getTripId());
         intent.putExtra("Amount",  tripsList.get(position).getAmount());
         startActivity(intent);
     

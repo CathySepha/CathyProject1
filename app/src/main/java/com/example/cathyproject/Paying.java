@@ -165,7 +165,7 @@ public class Paying extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                String sql = "SELECT Remainingslots FROM trips WHERE DestinationId = '"+TripId+"' AND Status = 'Active'";
+                String sql = "SELECT Remainingslots FROM trips WHERE TripId = '"+TripId+"' AND Status = 'Active'";
                 params.put("sql", sql);
                 params.put("action", "getdata");
 

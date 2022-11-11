@@ -26,7 +26,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         OnNoteListener onNoteListener;
-        private TextView txtdestinationid;
+        private TextView txttripid;
         private TextView txtamount;
         private TextView txttripname;
         private TextView last_name_field;
@@ -36,7 +36,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
 
 
-            txtdestinationid = itemView.findViewById(R.id.txt_destinationId);
+            txttripid = itemView.findViewById(R.id.txt_tripid);
             txttripname = itemView.findViewById(R.id.txt_Tripname);
             txtamount = itemView.findViewById(R.id.txt_amount);
             itemView.setOnClickListener(this);
@@ -47,8 +47,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public void onClick(View v) {
             this.onNoteListener.onNoteClick(getAdapterPosition());
         }
-        public void setdestinationid(String DestiantionId) {
-            txtdestinationid.setText(DestiantionId);
+        public void setdestinationid(String TripId) {
+            txttripid.setText(TripId);
         }
 
         public void settripname(String Tripname) {
@@ -74,7 +74,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
 
 
-        holder.setdestinationid(String.valueOf(retrievedResponses.get(position).getDestinationId()));
+        holder.setdestinationid(String.valueOf(retrievedResponses.get(position).getTripId()));
         holder.setamount(String.valueOf(retrievedResponses.get(position).getAmount()));
         holder.settripname(String.valueOf(retrievedResponses.get(position).getTripname()));
 

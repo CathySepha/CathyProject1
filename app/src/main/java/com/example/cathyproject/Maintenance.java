@@ -45,7 +45,7 @@ public class Maintenance extends Fragment  implements
 
         TextInputEditText Location, Expenseamount,TripId;
         Button Submit;
-        String location, expamount;
+        String location, expamount,item ;
         ProgressDialog pdDialog;
         Spinner spinn;
         public int selectedidpos;
@@ -158,10 +158,11 @@ public class Maintenance extends Fragment  implements
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String,String> params = new HashMap<>();
-                    String sql="INSERT INTO expenses (Expensename,Expenseamount,Location) VALUES ('"+Expenseamount.getText().toString()+"','"+Location.getText().toString()+"');";
+                    String sql="INSERT INTO expenses (Expensename,Expenseamount,Location) VALUES ('"+item+"','"+Expenseamount.getText().toString()+"','"+Location.getText().toString()+"');";
 
 
                     params.put("sql",sql);
+
                     params.put("action","insertdata");
 
 
@@ -174,7 +175,7 @@ public class Maintenance extends Fragment  implements
         } //Performing action onItemSelected and onNothing selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
+       item = parent.getItemAtPosition(position).toString();
         Toast.makeText(getContext(),String.valueOf( position), Toast.LENGTH_SHORT).show();
         selectedidpos=position;
     }

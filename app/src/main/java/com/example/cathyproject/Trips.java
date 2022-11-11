@@ -3,23 +3,23 @@ package com.example.cathyproject;
 public class Trips {
 
 
-    private String DestinationId;
+    private String TripId;
     private String Tripname;
     private String Amount;
 
-    public Trips(String DestinationId, String TripName, String Amount) {
-        this.DestinationId = DestinationId;
+    public Trips(String TripId, String TripName, String Amount) {
+        this.TripId = TripId;
         this.Tripname = TripName;
         this.Amount = Amount;
 
     }
 
-    public String getDestinationId() {
-        return DestinationId;
+    public String getTripId() {
+        return TripId;
     }
 
     public void setDestinationId(String DestinationId) {
-        this.DestinationId = DestinationId;
+        this.TripId = DestinationId;
     }
 
     public String getTripname() {
@@ -42,7 +42,7 @@ public class Trips {
     @Override
     public String toString() {
         return "DataPOJO {" +
-                "DesinationId=" + DestinationId +
+                "DesinationId=" + TripId +
                 ", Tripname='" + Tripname + '\'' +
                 ", Amount='" + Amount + '\'' +
                 '}';
