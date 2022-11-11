@@ -133,6 +133,6 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
 
 
         Toast.makeText(getApplicationContext(), String.valueOf(tripsList.get(position).getTripname()
-), Toast.LENGTH_SHORT).show();
+         ), Toast.LENGTH_SHORT).show();
     }
 }

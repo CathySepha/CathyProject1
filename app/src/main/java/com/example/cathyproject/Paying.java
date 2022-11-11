@@ -41,7 +41,7 @@ public class Paying extends AppCompatActivity {
     Button PAY;
     float res;
     ProgressDialog pdDialog;
-    SharedPreferences sh;
+
     List<String> destinationId,Remainingslots;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
