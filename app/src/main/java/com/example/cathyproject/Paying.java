@@ -91,6 +91,7 @@ public class Paying extends AppCompatActivity {
         });
         selectdata();
 
+
     }
     public void open(float res){
         String str = String.valueOf(res);
@@ -177,6 +178,44 @@ public class Paying extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
+    public void selectdata2() {
+        pdDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.url),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Bpink", response);
+                        pdDialog.dismiss();
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdDialog.dismiss();
+                Log.d("volley error", error.toString());
+                Toast.makeText(getApplicationContext(), "Insertion Error !2" + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                String sql = "UPDATE trips SET Remainingslots=Remainingslots-'"+pNoOfseats+"' WHERE TripId='"+TripId+"'";
+                System.out.println(sql);
+                params.put("sql", sql);
+                params.put("action", "insertdata");
+
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
     private void paying()
     {
         pdDialog.show();
@@ -193,6 +232,7 @@ public class Paying extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
                             mpesa();
+                            selectdata2();
 
 
                             if(success.equals("1")){
