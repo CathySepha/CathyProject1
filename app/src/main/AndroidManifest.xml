@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CathyProject"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name=".Driver"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".Paying"
@@ -28,7 +28,7 @@
             android:name=".Registration"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Driver"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,7 +3,9 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
-    <string name="url">http://192.168.229.133/Sacco/Sacco.php</string>
-    <string name="mpesaurl">http://192.168.229.133/Sacco/onlinepayment/stk_initiate.php</string>
-    <string name="smsurl">http://192.168.229.133/Sacco/mobiteck.php</string>
+    <string name="url">http://192.168.1.106/Sacco/Sacco.php</string>
+    <string name="mpesaurl">http://192.168.1.106/Sacco/onlinepayment/stk_initiate.php</string>
+    <string name="smsurl">http://192.168.1.106/Sacco/mobiteck.php</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

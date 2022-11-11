@@ -139,7 +139,6 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
-                String sql="INSERT INTO users (FirstName,LastName,Email,PhoneNumber,Role,Password) VALUES ('$FirstName','$LastName','$Email','$PhoneNumber','$Role','$Password');";
 
                 params.put("FirstName",sfirstname);
                 params.put("LastName",slastname);
