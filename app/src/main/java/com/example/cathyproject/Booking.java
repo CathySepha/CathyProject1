@@ -3,10 +3,12 @@ package com.example.cathyproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,12 +38,45 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
     List<Trips> tripsList = new ArrayList<>();
     private RecyclerView rv_trips;
     private static final String TAG = "Booking";
+    SharedPreferences.Editor preferencesEditor;
+    SharedPreferences mPreferences;
+    String sharedprofFile = "MySharedPref";
+
+
+    // Make sure to use the FloatingActionButton for all the FABs
+    FloatingActionButton  mLogout;
+    // These are taken to make visible and invisible along with FABs
+    TextView addlogouttext;
+    // to check whether sub FAB buttons are visible or not.
+    Boolean isAllFabsVisible;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
+        mPreferences = getSharedPreferences(sharedprofFile, MODE_PRIVATE);
+        preferencesEditor = mPreferences.edit();
+
+        // Register all the FABs with their IDs This FAB button is the Parent
+        // FAB button
+        mLogout = findViewById(R.id.logoutfab);
+        // Also register the action name text, of all the FABs.
+        addlogouttext = findViewById(R.id.logouttext);
+        // Now set all the FABs and all the action name texts as GONE
+
+        isAllFabsVisible = true;
+        // making the fab and action text visible when the parent FAB is clicked
+        mLogout.setOnClickListener(view -> {
+            preferencesEditor.putString("issignedin", "false");
+            Intent i=new Intent(Booking.this,Login.class);
+            //Intent is used to switch from one activity to another.
+            startActivity(i);
+            //invoke the SecondActivity.
+
+        });
+
+
 
         tripsList = new ArrayList<>();
         rv_trips = findViewById(R.id.rv_trips);

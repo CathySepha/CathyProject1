@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,28 +7,64 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-
     tools:context=".Booking">
 
 
     <TextView
-        android:layout_width="380dp"
-        android:layout_height="121dp"
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="Convenient Fast  Reliable"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="68dp"
+        android:gravity="center_horizontal"
+        android:text="Convenient And Reliable"
         android:textColor="@android:color/black"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_trips"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.617" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_trips"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        tools:listitem="row_trips"
+        android:layout_width="0dp"
+        android:layout_height="375dp"
 
-        />
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:listitem="row_trips" />
 
 
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/logouttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutfab"
+        app:layout_constraintEnd_toStartOf="@+id/logoutfab"
+        app:layout_constraintTop_toTopOf="@+id/logoutfab"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/logoutfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="79dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="95dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_trips"
+        app:srcCompat="@drawable/ic_logout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

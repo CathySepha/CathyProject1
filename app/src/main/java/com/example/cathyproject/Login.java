@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     String is_signed_in = "";
     SharedPreferences mPreferences;
     String sharedprofFile = "MySharedPref";
-    SharedPreferences.Editor preferencesEditor;
+   SharedPreferences.Editor preferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,7 @@ public class Login extends AppCompatActivity {
 
         is_signed_in = mPreferences.getString("issignedin", "false");
 
-        if (is_signed_in.equals("true")) {
-            Intent i = new Intent(Login.this, Booking.class);
-            startActivity(i);
 
-            finish();
-        }
 
         Registernow = (TextView) findViewById(R.id.registernow);
         pdDialog = new ProgressDialog(Login.this);
