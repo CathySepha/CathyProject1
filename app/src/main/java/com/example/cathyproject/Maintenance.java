@@ -2,6 +2,7 @@ package com.example.cathyproject;
 
 import android.app.ProgressDialog;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -28,6 +29,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.R.layout.*;
+import static android.content.Context.MODE_PRIVATE;
 
 public class Maintenance extends Fragment  implements
         AdapterView.OnItemSelectedListener {
@@ -45,8 +49,10 @@ public class Maintenance extends Fragment  implements
 
         TextInputEditText Location, Expenseamount,TripId;
         Button Submit;
-        String location, expamount,item ;
+        String location, expamount,item,tripid,UserId;
         ProgressDialog pdDialog;
+    SharedPreferences.Editor preferencesEditor;
+    SharedPreferences mPreferences;
         Spinner spinn;
         public int selectedidpos;
 
@@ -70,6 +76,11 @@ public class Maintenance extends Fragment  implements
             // Inflate the layout for this fragment
             Expenseamount=view.findViewById(R.id.expamount);
             Location=view.findViewById(R.id.location);
+            mPreferences= this.getActivity().getSharedPreferences("sharedprofFile", MODE_PRIVATE);
+            preferencesEditor = mPreferences.edit();
+            SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+            UserId= sh.getString("UserId", "");
 
 
 
@@ -101,6 +112,8 @@ public class Maintenance extends Fragment  implements
                     insertexpenses();
                 }
             });
+            selectdata();
+
 
 
             return view;
@@ -158,7 +171,7 @@ public class Maintenance extends Fragment  implements
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String,String> params = new HashMap<>();
-                    String sql="INSERT INTO expenses (Expensename,Expenseamount,Location) VALUES ('"+item+"','"+Expenseamount.getText().toString()+"','"+Location.getText().toString()+"');";
+                    String sql="INSERT INTO expenses (TripId,Expensename,Expenseamount,Location) VALUES ('"+tripid+"','"+item+"','"+Expenseamount.getText().toString()+"','"+Location.getText().toString()+"');";
 
 
                     params.put("sql",sql);
@@ -182,6 +195,72 @@ public class Maintenance extends Fragment  implements
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
+
+    }
+    public void selectdata() {
+        pdDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.url),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("What", response);
+                        pdDialog.dismiss();
+
+
+
+
+                        try {
+                            JSONObject eventobject = new JSONObject(response);
+
+                            JSONArray array = eventobject.getJSONArray("data");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                // creating a new json object and
+                                // getting each object from our json array.
+
+                                // we are getting each json object.
+                                JSONObject responseObj = array.getJSONObject(i);
+
+
+
+
+
+
+                                tripid=responseObj.getString("TripId");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdDialog.dismiss();
+                Log.d("volley error", error.toString());
+                Toast.makeText(getContext(), "Insertion Error !2" + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                String sql = "SELECT bookings.TripId, bookings.Dropoffstage, trips.UserId, bookings.Status FROM bookings INNER JOIN trips ON trips.TripId=bookings.TripId where bookings.Status='Active' and trips.UserId='"+UserId+"'";
+                params.put("sql", sql);
+                params.put("action", "getdata");
+
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 }
 

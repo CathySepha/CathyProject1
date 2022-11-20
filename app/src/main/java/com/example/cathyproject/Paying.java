@@ -178,6 +178,7 @@ public class Paying extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
+    // code for calculating the number of remaining slots after a booking is made
     public void selectdata2() {
         pdDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getResources().getString(R.string.url),
@@ -186,9 +187,6 @@ public class Paying extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e("Bpink", response);
                         pdDialog.dismiss();
-
-
-
 
 
                     }
@@ -216,6 +214,7 @@ public class Paying extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
+    // booking a trip and selecting the number of trips and the price
     private void paying()
     {
         pdDialog.show();
@@ -355,10 +354,6 @@ public class Paying extends AppCompatActivity {
 
 
 
-
-
-
-
                             }
 
 
@@ -388,5 +383,13 @@ public class Paying extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(Paying.this,Booking.class);
+        //Intent is used to switch from one activity to another.
+        startActivity(i);
     }
 }
