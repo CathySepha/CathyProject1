@@ -225,7 +225,7 @@ public class Paying extends AppCompatActivity {
                     public void onResponse(String response) {
                         pdDialog.hide();
 
-                        Log.d("anyText",response);
+                        Log.d("RRR",response);
                         try{
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");

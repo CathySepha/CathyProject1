@@ -47,10 +47,11 @@ public class Home extends Fragment implements DropoffAdapter.OnNoteListener   {
 
     List<String> dropoflist = new ArrayList<String>();
     List<Dropoffs> dropoffsList = new ArrayList<>();
+    DropoffAdapter adapter;
+
     private RecyclerView rv_dropoff;
     SharedPreferences.Editor preferencesEditor;
     SharedPreferences mPreferences;
-    DropoffAdapter adapter;
     String sharedprofFile = "MySharedPref";
     String PhoneNumber,UserId,tripid;
     Button close;
@@ -243,10 +244,6 @@ public class Home extends Fragment implements DropoffAdapter.OnNoteListener   {
                                 String Remslots = responseObj.getString("Remainingslots");
 
 
-
-
-
-
                             }
 
 
@@ -279,7 +276,7 @@ public class Home extends Fragment implements DropoffAdapter.OnNoteListener   {
         requestQueue.add(stringRequest);
     }
 
-
+// code for closing booking after the trip is closed
 
     public void closebookings() {
         pdDialog.show();

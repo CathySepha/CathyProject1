@@ -8,6 +8,7 @@
     tools:context=".Home">
 
 
+
     <TextView
         android:id="@+id/logouttext"
         android:layout_width="wrap_content"
@@ -41,10 +42,9 @@
         android:layout_marginEnd="74dp"
         android:layout_marginBottom="95dp"
         android:clickable="true"
-        android:outlineAmbientShadowColor="@color/light_blue_900"
+        android:outlineAmbientShadowColor="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:srcCompat="@drawable/ic_logout" />
 
     <Button
