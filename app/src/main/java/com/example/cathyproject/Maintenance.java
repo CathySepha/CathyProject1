@@ -189,7 +189,7 @@ public class Maintenance extends Fragment  implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
        item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(getContext(),String.valueOf( position), Toast.LENGTH_SHORT).show();
+
         selectedidpos=position;
     }
     @Override

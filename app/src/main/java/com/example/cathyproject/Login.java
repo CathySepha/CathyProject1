@@ -100,8 +100,7 @@ public class Login extends AppCompatActivity {
                             String Role = jsonObject.getString("Role");
 
                             if (success.equals("1")) {
-                                Toast.makeText(getApplicationContext(), "Logged In  Success", Toast.LENGTH_LONG).show();
-                                pdDialog.dismiss();
+                                 pdDialog.dismiss();
 
                                 preferencesEditor.putString("issignedin", "true");
                                 preferencesEditor.putString("UserId", id);
@@ -111,12 +110,10 @@ public class Login extends AppCompatActivity {
                                 preferencesEditor.putString("Role", Role);
                                 preferencesEditor.apply();
 
-                                Intent i = new Intent(Login.this, Booking.class);
-                                startActivity(i);
-                                finish();
+
 
                             }
-                            if (Role.equals("Customer")) {
+                            if (Role.equalsIgnoreCase("Customer")) {
                                 Intent intent = new Intent(Login.this, Booking.class);
                                 intent.putExtra(id, id);
                                 intent.putExtra(FirstName, FirstName);
@@ -139,7 +136,7 @@ public class Login extends AppCompatActivity {
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(),"Login Error !1"+e,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"wrong credentials",Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

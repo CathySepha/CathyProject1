@@ -374,6 +374,7 @@ public class Paying extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("Phone", PhoneNumber);
+                params.put("Amount", String.valueOf(res));
 
 
 

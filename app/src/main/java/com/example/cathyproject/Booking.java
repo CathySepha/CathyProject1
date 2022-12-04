@@ -41,6 +41,7 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
     SharedPreferences.Editor preferencesEditor;
     SharedPreferences mPreferences;
     String sharedprofFile = "MySharedPref";
+    private long pressedTime;
 
 
     // Make sure to use the FloatingActionButton for all the FABs
@@ -170,6 +171,20 @@ public class Booking extends AppCompatActivity implements TripsAdapter.OnNoteLis
 
         Toast.makeText(getApplicationContext(), String.valueOf(tripsList.get(position).getTripname()
          ), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            Intent i=new Intent(getApplicationContext(),Login.class);
+            startActivity(i);
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        }
+        pressedTime = System.currentTimeMillis();
     }
 
 }
